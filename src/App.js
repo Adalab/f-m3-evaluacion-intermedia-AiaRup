@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import PokeList from './components/PokeList';
+import Form from './components/Form';
 
 const pokemonList = [
   { id: 1, name: 'bulbasaur', types: ['poison', 'grass'], evolution: null, url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png' },
@@ -14,18 +15,30 @@ const pokemonList = [
   { id: 9, name: 'blastoise', types: ['water'], evolution: 'wartortle', url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png' },
   { id: 10, name: 'caterpie', types: ['bug'], evolution: null, url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10.png' }
 ];
-
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      filteredPokemons: pokemonList
+    };
+    this.filterList = this.filterList.bind(this);
+  }
+
+  filterList(event) {
+    const value = event.currentTarget.value;
+    this.setState((prevState, props) => {
+      const newArray = pokemonList.filter(pokemon => pokemon.name.includes(value));
+      return { filteredPokemons: newArray };
+    });
   }
 
   render() {
+    const { filteredPokemons } = this.state;
     return (
       <div className="page">
         <h1 className="page__title">Mi lista de pokemon</h1>
-        <PokeList pokemonList={pokemonList} />
+        <Form filterList={this.filterList} />
+        <PokeList pokemonList={filteredPokemons} />
       </div>
     );
   }
