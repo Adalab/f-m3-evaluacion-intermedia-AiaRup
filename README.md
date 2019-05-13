@@ -1,3 +1,3 @@
 ## f-m3-evaluacion-intermedia-AiaRup
 
-A simple memory game that uses an open API to get Pokemon images for the game's cards.
+A simple app to filter pictures of pokemon with react using lifting, state, map and filter.🚀
