@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Pokemon from './Pokemon';
+import './PokeList.css';
 
 const PokeList = props => {
   const { pokemonList } = props;

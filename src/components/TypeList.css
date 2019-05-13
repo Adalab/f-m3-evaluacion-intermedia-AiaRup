@@ -1,0 +1,17 @@
+.types__list {
+  list-style: none;
+  text-align: center;
+  margin: 10px 0;
+  padding: 0;
+}
+
+.pokemon__type {
+  background-color: #777;
+  color: #fff;
+  display: inline-block;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 5px;
+  margin: 10px;
+  border-radius: 10px;
+}
