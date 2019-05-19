@@ -2,33 +2,42 @@ import React, { Component } from 'react';
 import './App.css';
 import PokeList from './components/PokeList';
 import Form from './components/Form';
+import { pokemonList } from './data/pokemonData.js';
 
-const pokemonList = [
-  { id: 1, name: 'bulbasaur', types: ['poison', 'grass'], evolution: null, url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png' },
-  { id: 2, name: 'ivysaur', types: ['poison', 'grass'], evolution: 'bulbasaur', url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png' },
-  { id: 3, name: 'venusaur', types: ['poison', 'grass'], evolution: 'ivysaur', url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png' },
-  { id: 4, name: 'charmander', types: ['fire'], evolution: null, url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png' },
-  { id: 5, name: 'charmeleon', types: ['fire'], evolution: 'charmander', url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png' },
-  { id: 6, name: 'charizard', types: ['flying', 'fire'], evolution: 'charmeleon', url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png' },
-  { id: 7, name: 'squirtle', types: ['water'], evolution: null, url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png' },
-  { id: 8, name: 'wartortle', types: ['water'], evolution: 'squirtle', url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png' },
-  { id: 9, name: 'blastoise', types: ['water'], evolution: 'wartortle', url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png' },
-  { id: 10, name: 'caterpie', types: ['bug'], evolution: null, url: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10.png' }
-];
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      filteredPokemons: pokemonList
+      filteredPokemons: [...pokemonList],
+      originalPokemonList: [...pokemonList]
     };
     this.filterList = this.filterList.bind(this);
+    this.handleFavorite = this.handleFavorite.bind(this);
+    this.changeIsFavorite = this.changeIsFavorite.bind(this);
   }
 
   filterList(event) {
     const value = event.currentTarget.value;
-    this.setState((prevState, props) => {
-      const newArray = pokemonList.filter(pokemon => pokemon.name.includes(value));
-      return { filteredPokemons: newArray };
+    const newArray = this.state.originalPokemonList.filter(pokemon => pokemon.name.toUpperCase().includes(value.toUpperCase()));
+    this.setState({ filteredPokemons: newArray });
+  }
+
+  handleFavorite(event) {
+    const id = event.currentTarget.id;
+    this.setState({
+      // originalPokemonList: this.changeIsFavorite(id, this.state.originalPokemonList),
+      filteredPokemons: this.changeIsFavorite(id, this.state.filteredPokemons)
+    });
+  }
+
+  changeIsFavorite(id, array) {
+    return array.map(pokemon => {
+      if (pokemon.id === parseInt(id)) {
+        console.log('pokemon', pokemon);
+        console.log('isFavorite', pokemon.isFavorite);
+        pokemon.isFavorite = !pokemon.isFavorite;
+      }
+      return pokemon;
     });
   }
 
@@ -38,7 +47,7 @@ class App extends Component {
       <div className="page">
         <h1 className="page__title">Mi lista de pokemon</h1>
         <Form filterList={this.filterList} />
-        <PokeList pokemonList={filteredPokemons} />
+        <PokeList pokemonList={filteredPokemons} handleFavorite={this.handleFavorite} />
       </div>
     );
   }

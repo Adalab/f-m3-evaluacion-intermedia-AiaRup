@@ -3,12 +3,11 @@ import PropTypes from 'prop-types';
 import TypeList from './TypeList';
 import './Pokemon.css';
 
-const Pokemon = props => {
-  const { url, name, types } = props;
+const Pokemon = ({ url, name, types, id, handleFavorite }) => {
   return (
-    <div className="pokemon__card">
+    <div className="pokemon__card" id={id} onClick={handleFavorite}>
       <div className="image__container">
-        <img src={url} alt="" className="card__image" />
+        <img src={url} alt={name} className="card__image" />
       </div>
       <h2 className="pokemon__name">{name}</h2>
       <TypeList types={types} />

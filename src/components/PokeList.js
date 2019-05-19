@@ -3,15 +3,16 @@ import PropTypes from 'prop-types';
 import Pokemon from './Pokemon';
 import './PokeList.css';
 
-const PokeList = props => {
-  const { pokemonList } = props;
+const PokeList = ({ pokemonList, handleFavorite }) => {
+  // const  = props;
 
   return (
     <ul className="list__pokemon">
       {pokemonList.map(pokemon => {
+        const pokemonClass = pokemon.isFavorite ? 'favorite' : '';
         return (
-          <li className="pokemon" key={pokemon.id}>
-            <Pokemon url={pokemon.url} name={pokemon.name} types={pokemon.types} />
+          <li className={`pokemon ${pokemonClass}`} key={pokemon.id}>
+            <Pokemon url={pokemon.url} name={pokemon.name} types={pokemon.types} id={pokemon.id} handleFavorite={handleFavorite} />
           </li>
         );
       })}
