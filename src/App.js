@@ -8,8 +8,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      filteredPokemons: [...pokemonList],
-      originalPokemonList: [...pokemonList],
+      filteredPokemons: pokemonList,
+      originalPokemonList: pokemonList,
       favoriteArr: []
     };
     this.filterList = this.filterList.bind(this);
