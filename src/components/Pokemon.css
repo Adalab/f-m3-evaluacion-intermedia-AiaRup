@@ -13,10 +13,12 @@
 .card__image {
   transition: all 0.2s ease-in-out;
 }
+
 .card__image:hover {
   transform: scale(1.2);
   cursor: pointer;
 }
+
 .pokemon__name {
   border-top: 1px solid #000;
   border-bottom: 1px solid #000;
