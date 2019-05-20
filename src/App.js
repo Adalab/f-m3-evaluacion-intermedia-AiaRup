@@ -9,11 +9,11 @@ class App extends Component {
     super(props);
     this.state = {
       filteredPokemons: [...pokemonList],
-      originalPokemonList: [...pokemonList]
+      originalPokemonList: [...pokemonList],
+      favoriteArr: []
     };
     this.filterList = this.filterList.bind(this);
     this.handleFavorite = this.handleFavorite.bind(this);
-    this.changeIsFavorite = this.changeIsFavorite.bind(this);
   }
 
   filterList(event) {
@@ -23,22 +23,14 @@ class App extends Component {
   }
 
   handleFavorite(event) {
-    const id = event.currentTarget.id;
-    this.setState({
-      // originalPokemonList: this.changeIsFavorite(id, this.state.originalPokemonList),
-      filteredPokemons: this.changeIsFavorite(id, this.state.filteredPokemons)
-    });
-  }
-
-  changeIsFavorite(id, array) {
-    return array.map(pokemon => {
-      if (pokemon.id === parseInt(id)) {
-        console.log('pokemon', pokemon);
-        console.log('isFavorite', pokemon.isFavorite);
-        pokemon.isFavorite = !pokemon.isFavorite;
-      }
-      return pokemon;
-    });
+    const id = parseInt(event.currentTarget.id);
+    let newArray = [];
+    if (this.state.favoriteArr.includes(id)) {
+      newArray = this.state.favoriteArr.filter(item => item !== id);
+    } else {
+      newArray = [...this.state.favoriteArr, parseInt(id)];
+    }
+    this.setState({ favoriteArr: newArray });
   }
 
   render() {
@@ -47,7 +39,7 @@ class App extends Component {
       <div className="page">
         <h1 className="page__title">Mi lista de pokemon</h1>
         <Form filterList={this.filterList} />
-        <PokeList pokemonList={filteredPokemons} handleFavorite={this.handleFavorite} />
+        <PokeList pokemonList={filteredPokemons} handleFavorite={this.handleFavorite} favList={this.state.favoriteArr} />
       </div>
     );
   }
